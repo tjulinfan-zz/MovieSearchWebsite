@@ -8,9 +8,23 @@
             <param-value>http://localhost:8080/MovieSearchWebsite/TestAPI</param-value>
         </init-param>
     </servlet>
+    
+    <servlet>
+        <servlet-name>Movie</servlet-name>
+        <servlet-class>demo.MovieServlet</servlet-class>
+        <init-param>
+            <param-name>movieurl</param-name>
+            <param-value>http://localhost:8080/MovieSearchWebservice/Movie</param-value>
+        </init-param>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/TestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Movie</servlet-name>
+        <url-pattern>/movie</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

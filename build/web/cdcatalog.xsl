@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!-- Edited by XMLSpy® -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tt="http://www.baidu.com" >
 
 <xsl:template match="/">
   <html>
@@ -14,10 +14,10 @@
         <th>Title</th>
         <th>Artist</th>
       </tr>
-      <xsl:for-each select="catalog/cd">
+      <xsl:for-each select="tt:catalog/tt:cd">
       <tr>
-        <td><xsl:value-of select="title"/></td>
-        <td><xsl:value-of select="artist"/></td>
+        <td><xsl:value-of select="tt:title"/></td>
+        <td><xsl:value-of select="tt:artist"/></td>
       </tr>
       </xsl:for-each>
     </table>
