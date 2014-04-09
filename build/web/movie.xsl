@@ -19,8 +19,9 @@
                     <xsl:value-of select="movie:movie/movie:title" />
                 </title>
                 <link rel="stylesheet" href="css/bootstrap.min.css" />
-                <script src="js/jquery.min.js"></script>
+                <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
                 <link rel="stylesheet" href="css/movie.css" />
+                <link rel="stylesheet" href="css/docs.min.css" />
             </head>
             
             <body>
@@ -28,13 +29,13 @@
                     <div class="container">
                         <ul class="nav navbar-nav">
                             <li class="nav-title">
-                                <a href="#" style="color:white;">Movie Search Website</a>
+                                <a href="index.html" style="color:white;">Movie Search Website</a>
                             </li>
                         </ul>
 
-                        <form class="navbar-form navbar-right nav-search" action="">
+                        <form class="navbar-form navbar-right nav-search" action="search">
                             <div class="form-group">
-                                <input class="form-control" type="text" />
+                                <input class="form-control" type="text" name="q" required="required" />
                             </div>  
                             <button class="btn btn-default">Search</button>
                         </form>
@@ -46,12 +47,12 @@
                         <div class="col-md-8">
                             <div class="content movie-info">
                                 <img class="movie-cover">
-                                <xsl:attribute name="src">
-                                    <xsl:value-of select="movie:movie/movie:posterImgUrl" />
-                                </xsl:attribute>
-                                <xsl:attribute name="alt">
-                                    <xsl:value-of select="movie:movie/movie:title" />
-                                </xsl:attribute>
+                                    <xsl:attribute name="src">
+                                        <xsl:value-of select="movie:movie/movie:posterImgUrl" />
+                                    </xsl:attribute>
+                                    <xsl:attribute name="alt">
+                                        <xsl:value-of select="movie:movie/movie:title" />
+                                    </xsl:attribute>
                                 </img>
                                 <div class="movie-info">
                                     <h3>
@@ -126,7 +127,7 @@
 
                         <div class="col-md-4">
                             <div class="content movie-link">
-                                <h3>其它信息</h3>
+                                <h3>OTHER INFORMATIONS</h3>
                                 <ul class="movie-links">
                                     <li>
                                         <a>
@@ -146,17 +147,135 @@
                                     </li>
                                 </ul>
                             </div>
+                            <div class="content movie-link">
+                                <h3>TRAILERS</h3>
+                                <ul class="movie-links">
+                                    <xsl:for-each select="//movie:trailer">
+                                        <li data-toggle="modal">
+                                            <xsl:attribute name="data-target">
+                                                    <![CDATA[#]]><xsl:value-of select="movie:trailerId" />
+                                            </xsl:attribute>
+                                            <xsl:value-of select="movie:title" />
+                                        </li>
+                                    
+                                        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <xsl:attribute name="id">
+                                                <xsl:value-of select="movie:trailerId" />
+                                            </xsl:attribute>
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            <xsl:text disable-output-escaping="yes">
+                                                                <![CDATA[&times; ]]>
+                                                            </xsl:text>
+                                                        </button>
+                                                        <h4 class="modal-title">
+                                                            <xsl:value-of select="movie:title" />
+                                                        </h4>
+                                                    </div>
+                                                
+                                                    <div class="modal-body">
+                                                        <xsl:value-of select="movie:embed" disable-output-escaping="yes" />
+                                                    </div>
+                                                
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default">
+                                                            <a>
+                                                                <xsl:attribute name="href">
+                                                                    <xsl:value-of select="movie:link" />
+                                                                </xsl:attribute>
+                                                                Detail &gt;&gt;
+                                                            </a>
+                                                        </button>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                    </xsl:for-each>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="col-md-8">
                             <div class="content movie-comments">
-                                <h3>评论</h3>
-         
+                                <h3>COMMENTS</h3>
+                                 
+                                <xsl:for-each select="//movie:review">
+                                    <div class="bs-callout bs-callout-info">
+                                        <h4>
+                                            <a>
+                                                <xsl:attribute name="href"><xsl:value-of select="movie:link" /></xsl:attribute>
+                                                <xsl:value-of select="movie:critic" />&#160;<xsl:value-of select="movie:date" />
+                                            </a>
+                                        </h4>
+                                        <p>
+                                            <xsl:value-of select="movie:quote" />
+                                        </p>
+                                    </div>
+                                </xsl:for-each>
+                                 
                             </div>
                         </div>
+                        
+<!--                        <div class="col-md-4">
+                            <div class="content movie-link">
+                                <h3>TRAILERS</h3>
+                                <ul class="movie-links">
+                                    <xsl:for-each select="//movie:trailer">
+                                        <li data-toggle="modal">
+                                            <xsl:attribute name="data-target">
+                                                    <![CDATA[#]]><xsl:value-of select="movie:trailerId" />
+                                            </xsl:attribute>
+                                            <xsl:value-of select="movie:title" />
+                                        </li>
+                                    
+                                        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <xsl:attribute name="id">
+                                                <xsl:value-of select="movie:trailerId" />
+                                            </xsl:attribute>
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            <xsl:text disable-output-escaping="yes">
+                                                                <![CDATA[&times; ]]>
+                                                            </xsl:text>
+                                                        </button>
+                                                        <h4 class="modal-title">
+                                                            <xsl:value-of select="movie:title" />
+                                                        </h4>
+                                                    </div>
+                                                
+                                                    <div class="modal-body">
+                                                        <xsl:value-of select="movie:embed" disable-output-escaping="yes" />
+                                                    </div>
+                                                
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-default">
+                                                            <a>
+                                                                <xsl:attribute name="href">
+                                                                    <xsl:value-of select="movie:link" />
+                                                                </xsl:attribute>
+                                                                Detail &gt;&gt;
+                                                            </a>
+                                                        </button>
+                                                    </div>
+                                                </div> /.modal-content 
+                                            </div> /.modal-dialog 
+                                        </div> /.modal 
+                                    </xsl:for-each>
+                                </ul>
+                            </div>
+                        </div>-->
                     </div>
 
                 </div>
+                
+                <script src="js/bootstrap.min.js">     
+                </script>
             </body>
         </html>
     </xsl:template>

@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,12 +24,13 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import org.apache.taglibs.standard.tag.common.core.Util;
 
 /**
  *
  * @author LinFan
  */
-public class TestServlet extends HttpServlet {
+public class SearchServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,18 +45,23 @@ public class TestServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            String q = request.getParameter("q");
+            String getUrl = getInitParameter("searchurl") + "?" + "q" + "=" + URLEncoder.encode(q, "utf-8");
+            System.out.println(getUrl);
             
             TransformerFactory fac = TransformerFactory.newInstance();
-            Source xslt = new StreamSource(new File(getServletContext().getRealPath("/") + "cdcatalog.xsl"));
-            Transformer transformer = fac.newTransformer(xslt);
-            
-            URL url  = new URL(getInitParameter("testurl"));
-            Source xml = new StreamSource(url.openStream());
-            transformer.transform(xml, new StreamResult(out) );
-        } catch (TransformerConfigurationException ex) {
-            Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerException ex) {
-            Logger.getLogger(TestServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Source xslt = new StreamSource(new File(getServletContext().getRealPath("/") + "search.xsl"));
+            try {
+                Transformer transformer = fac.newTransformer(xslt);
+                URL url  = new URL(getUrl);
+                Source xml = new StreamSource(url.openStream());
+                transformer.transform(xml, new StreamResult(out) );
+            } catch (TransformerConfigurationException ex) {
+                Logger.getLogger(MovieServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (TransformerException ex) {
+                Logger.getLogger(MovieServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

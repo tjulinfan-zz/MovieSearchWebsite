@@ -74,6 +74,7 @@
     
     <xsd:complexType name="trailer">
         <xsd:sequence>
+            <xsd:element name="trailerId" type="xsd:string" />
             <xsd:element name="title" type="xsd:string" minOccurs="0" />
             <xsd:element name="link" type="xsd:string" minOccurs="0" />
             <xsd:element name="pubDate" type="xsd:string" minOccurs="0" />

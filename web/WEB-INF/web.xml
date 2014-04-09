@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>TestServlet</servlet-name>
-        <servlet-class>demo.TestServlet</servlet-class>
-        <init-param>
-            <param-name>testurl</param-name>
-            <param-value>http://localhost:8080/MovieSearchWebsite/TestAPI</param-value>
-        </init-param>
-    </servlet>
-    
-    <servlet>
         <servlet-name>Movie</servlet-name>
         <servlet-class>demo.MovieServlet</servlet-class>
         <init-param>
@@ -17,14 +8,21 @@
             <param-value>http://localhost:8080/MovieSearchWebservice/Movie</param-value>
         </init-param>
     </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>TestServlet</servlet-name>
-        <url-pattern>/TestServlet</url-pattern>
-    </servlet-mapping>
+    <servlet>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>demo.SearchServlet</servlet-class>
+        <init-param>
+            <param-name>searchurl</param-name>
+            <param-value>http://localhost:8080/MovieSearchWebservice/Search</param-value>
+        </init-param>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Movie</servlet-name>
         <url-pattern>/movie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
